@@ -8,6 +8,7 @@ import { ApiImportModal } from '@/components/modals/ApiImportModal';
 import { AIAutoFillModal } from '@/components/ai/AIAutoFillModal';
 import { BatchImportModal } from '@/components/modals/BatchImportModal';
 import { useApiModalHandler } from '@/hooks/useApiModalHandler';
+import { AutomaticExtractionModal } from '@/components/common/AutomaticExtractionModal';
 
 interface LegalTextsEnrichmentTabProps {
   onAddLegalText: () => void;
@@ -68,6 +69,7 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
 
   const [showAutoFill, setShowAutoFill] = useState(false);
   const [showBatchImport, setShowBatchImport] = useState(false);
+  const [showAutoExtraction, setShowAutoExtraction] = useState(false);
 
   const handleAutoFill = () => {
     setShowAutoFill(true);
@@ -86,6 +88,21 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
       detail: { data, context: 'legal-text' }
     });
     window.dispatchEvent(event);
+  };
+
+  const handleAutoExtraction = () => {
+    setShowAutoExtraction(true);
+  };
+
+  const handleAutoExtractionDataExtracted = (data: any) => {
+    console.log('Données d\'extraction automatique pour texte juridique:', data);
+    // Ici vous pouvez traiter les données extraites et les passer au formulaire
+    if (onOCRDataExtracted) {
+      onOCRDataExtracted({
+        documentType: 'legal',
+        formData: data
+      });
+    }
   };
 
   const handleApiImport = () => {
@@ -240,6 +257,13 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
         isOpen={showBatchImport}
         onClose={() => setShowBatchImport(false)}
         context="legal-texts"
+      />
+
+      <AutomaticExtractionModal
+        isOpen={showAutoExtraction}
+        onClose={() => setShowAutoExtraction(false)}
+        context="legal"
+        onDataExtracted={handleAutoExtractionDataExtracted}
       />
     </div>
   );

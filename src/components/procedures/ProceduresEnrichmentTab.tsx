@@ -2,9 +2,10 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Plus, Upload, Wand2, Database, Scan } from 'lucide-react';
+import { Plus, Upload, Wand2, Database, Scan, Zap } from 'lucide-react';
 import { SmartOCRProcessor } from '@/components/common/SmartOCRProcessor';
 import { useGlobalActions } from '@/hooks/useGlobalActions';
+import { AutomaticExtractionModal } from '@/components/common/AutomaticExtractionModal';
 
 interface ProceduresEnrichmentTabProps {
   onAddProcedure: () => void;
@@ -14,6 +15,7 @@ interface ProceduresEnrichmentTabProps {
 
 export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExtracted }: ProceduresEnrichmentTabProps) {
   const [showOCRScanner, setShowOCRScanner] = useState(false);
+  const [showAutoExtraction, setShowAutoExtraction] = useState(false);
   const actions = useGlobalActions();
 
   const handleSmartOCRDataExtracted = (data: { documentType: 'legal' | 'procedure', formData: Record<string, any> }) => {
@@ -71,6 +73,21 @@ export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, on
     window.dispatchEvent(event);
   };
 
+  const handleAutoExtraction = () => {
+    setShowAutoExtraction(true);
+  };
+
+  const handleAutoExtractionDataExtracted = (data: any) => {
+    console.log('Données d\'extraction automatique pour procédure:', data);
+    // Ici vous pouvez traiter les données extraites et les passer au formulaire
+    if (onOCRDataExtracted) {
+      onOCRDataExtracted({
+        documentType: 'procedure',
+        formData: data
+      });
+    }
+  };
+
   return (
     <div className="space-y-8">
       {/* Section principale avec les 2 choix principaux */}
@@ -123,7 +140,7 @@ export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, on
       {/* Autres options d'enrichissement */}
       <div>
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Options d'enrichissement avancées</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="hover:shadow-md transition-shadow cursor-pointer border-gray-200" onClick={handleImportCSVExcel}>
             <CardHeader className="text-center">
               <Upload className="w-12 h-12 mx-auto text-blue-600 mb-4" />
@@ -160,6 +177,26 @@ export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, on
               >
                 <Wand2 className="w-4 h-4 mr-2" />
                 Auto-remplissage
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow cursor-pointer border-gray-200" onClick={handleAutoExtraction}>
+            <CardHeader className="text-center">
+              <Zap className="w-12 h-12 mx-auto text-orange-600 mb-4" />
+              <CardTitle className="text-lg">Extraction automatique</CardTitle>
+              <CardDescription>
+                Extraire automatiquement le contenu de documents de procédures
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                variant="outline"
+                className="w-full border-orange-300 text-orange-700 hover:bg-orange-50" 
+                onClick={handleAutoExtraction}
+              >
+                <Zap className="w-4 h-4 mr-2" />
+                Extraction auto
               </Button>
             </CardContent>
           </Card>
@@ -203,6 +240,14 @@ export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, on
           </Card>
         </div>
       </div>
+
+      {/* Modal d'extraction automatique */}
+      <AutomaticExtractionModal
+        isOpen={showAutoExtraction}
+        onClose={() => setShowAutoExtraction(false)}
+        context="procedure"
+        onDataExtracted={handleAutoExtractionDataExtracted}
+      />
     </div>
   );
 }
