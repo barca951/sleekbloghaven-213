@@ -8,7 +8,6 @@ import { ApiImportModal } from '@/components/modals/ApiImportModal';
 import { AIAutoFillModal } from '@/components/ai/AIAutoFillModal';
 import { BatchImportModal } from '@/components/modals/BatchImportModal';
 import { useApiModalHandler } from '@/hooks/useApiModalHandler';
-import { AutoExtractionTab } from '@/components/forms/AutoExtractionTab';
 
 interface LegalTextsEnrichmentTabProps {
   onAddLegalText: () => void;
@@ -89,12 +88,6 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
     window.dispatchEvent(event);
   };
 
-  const [showAutoExtraction, setShowAutoExtraction] = useState(false);
-
-  const handleAutoExtraction = () => {
-    setShowAutoExtraction(true);
-  };
-
   const handleApiImport = () => {
     openApiModal('legal-texts');
   };
@@ -107,20 +100,6 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
         onFormDataExtracted={handleSmartOCRDataExtracted}
         onClose={() => setShowOCRScanner(false)}
       />
-    );
-  }
-
-  if (showAutoExtraction) {
-    return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">Extraction automatique de données</h2>
-          <Button variant="outline" onClick={() => setShowAutoExtraction(false)}>
-            Retour
-          </Button>
-        </div>
-        <AutoExtractionTab />
-      </div>
     );
   }
 
@@ -156,14 +135,6 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
       buttonText: "Auto-remplissage",
       color: "purple",
       onClick: handleAutoFill
-    },
-    {
-      icon: Database,
-      title: "Extraction automatique",
-      description: "Importer et traiter automatiquement des textes juridiques",
-      buttonText: "Extraction auto",
-      color: "orange",
-      onClick: handleAutoExtraction
     },
     {
       icon: Settings,
@@ -227,7 +198,7 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
       {/* Autres options d'enrichissement */}
       <div>
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Options d'enrichissement avancées</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {actionsConfig.slice(2).map((action, index) => (
             <Card key={index + 2} className="hover:shadow-md transition-shadow cursor-pointer border-gray-200" onClick={action.onClick}>
               <CardHeader className="text-center">
