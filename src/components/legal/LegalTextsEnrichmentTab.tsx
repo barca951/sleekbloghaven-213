@@ -8,6 +8,7 @@ import { ApiImportModal } from '@/components/modals/ApiImportModal';
 import { AIAutoFillModal } from '@/components/ai/AIAutoFillModal';
 import { BatchImportModal } from '@/components/modals/BatchImportModal';
 import { useApiModalHandler } from '@/hooks/useApiModalHandler';
+import { AutoExtractionTab } from '@/components/forms/AutoExtractionTab';
 
 interface LegalTextsEnrichmentTabProps {
   onAddLegalText: () => void;
@@ -88,15 +89,10 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
     window.dispatchEvent(event);
   };
 
+  const [showAutoExtraction, setShowAutoExtraction] = useState(false);
+
   const handleAutoExtraction = () => {
-    const event = new CustomEvent('open-modal', {
-      detail: {
-        type: 'extraction',
-        title: 'Extraction automatique',
-        data: { feature: 'auto-extraction', context: 'legal-texts' }
-      }
-    });
-    window.dispatchEvent(event);
+    setShowAutoExtraction(true);
   };
 
   const handleApiImport = () => {
@@ -111,6 +107,20 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
         onFormDataExtracted={handleSmartOCRDataExtracted}
         onClose={() => setShowOCRScanner(false)}
       />
+    );
+  }
+
+  if (showAutoExtraction) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">Extraction automatique de données</h2>
+          <Button variant="outline" onClick={() => setShowAutoExtraction(false)}>
+            Retour
+          </Button>
+        </div>
+        <AutoExtractionTab />
+      </div>
     );
   }
 
