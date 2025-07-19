@@ -20,8 +20,6 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
   const [showOCRScanner, setShowOCRScanner] = useState(false);
   const [showAutoExtraction, setShowAutoExtraction] = useState(false);
   const { isModalOpen, context, openModal, closeModal, handleDataGenerated } = useAIAutoFill();
-  
-  console.log('🔄 [EnrichmentTab] RENDU - showAutoExtraction:', showAutoExtraction);
   const { showApiModal, apiContext, openApiModal, closeApiModal } = useApiModalHandler();
 
   const handleOCRExtracted = (text: string) => {
@@ -91,13 +89,8 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
   };
 
   const handleAutoExtraction = () => {
-    console.log('🎯 [EnrichmentTab] ========== FONCTION APPELÉE ==========');
-    console.log('🎯 [EnrichmentTab] handleAutoExtraction DÉCLENCHÉ');
-    console.log('🎯 [EnrichmentTab] État actuel showAutoExtraction:', showAutoExtraction);
-    console.log('🎯 [EnrichmentTab] Tentative d\'ouverture du modal...');
+    console.log('🎯 [EnrichmentTab] CLIC EXTRACTION AUTO - Ouverture modal');
     setShowAutoExtraction(true);
-    console.log('🎯 [EnrichmentTab] setShowAutoExtraction(true) EXÉCUTÉ');
-    console.log('🎯 [EnrichmentTab] ========================================');
   };
 
   const handleAutoExtractionDataExtracted = (data: any) => {
@@ -271,13 +264,9 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
       />
 
       {/* Modal d'extraction automatique */}
-      {console.log('🎭 [EnrichmentTab] RENDU MODAL - isOpen:', showAutoExtraction)}
       <AutomaticExtractionModal
         isOpen={showAutoExtraction}
-        onClose={() => {
-          console.log('🚪 [EnrichmentTab] FERMETURE MODAL DEMANDÉE');
-          setShowAutoExtraction(false);
-        }}
+        onClose={() => setShowAutoExtraction(false)}
         context="procedure"
         onDataExtracted={handleAutoExtractionDataExtracted}
       />
