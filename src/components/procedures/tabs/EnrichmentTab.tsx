@@ -211,8 +211,7 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
             <CardContent>
               <Button 
                 variant="outline"
-                className="w-full border-orange-300 text-orange-700 hover:bg-orange-50" 
-                onClick={handleAutoExtraction}
+                className="w-full border-orange-300 text-orange-700 hover:bg-orange-50"
               >
                 <Zap className="w-4 h-4 mr-2" />
                 Extraction auto
