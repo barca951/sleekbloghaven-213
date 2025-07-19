@@ -5,7 +5,7 @@ import Index from '@/pages/Index';
 import { AdminPanel } from '@/components/admin/AdminPanel';
 import { UnifiedModalProvider } from '@/components/modals/unified/UnifiedModalProvider';
 import { EnhancedSecurityProvider } from '@/components/security/EnhancedSecurityProvider';
-import { PerformanceOptimizer } from '@/components/optimization/PerformanceOptimizer';
+// import { PerformanceOptimizer } from '@/components/optimization/PerformanceOptimizer';
 import { AIAutoFillGlobalManager } from '@/components/ai/AIAutoFillGlobalManager';
 import { SimpleErrorBoundary } from '@/components/common/SimpleErrorBoundary';
 
@@ -16,20 +16,18 @@ function App() {
     <SimpleErrorBoundary>
       <Router>
         <EnhancedSecurityProvider>
-          <PerformanceOptimizer>
-            <UnifiedModalProvider>
-              <div className="min-h-screen bg-gray-50">
-                <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/admin" element={<AdminPanel />} />
-                  <Route path="/:section" element={<Index />} />
-                  <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-                <Toaster />
-                <AIAutoFillGlobalManager />
-              </div>
-            </UnifiedModalProvider>
-          </PerformanceOptimizer>
+          <UnifiedModalProvider>
+            <div className="min-h-screen bg-gray-50">
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/:section" element={<Index />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+              <Toaster />
+              <AIAutoFillGlobalManager />
+            </div>
+          </UnifiedModalProvider>
         </EnhancedSecurityProvider>
       </Router>
     </SimpleErrorBoundary>
