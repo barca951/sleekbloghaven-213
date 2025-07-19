@@ -157,6 +157,25 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
         </Card>
       </div>
 
+      {/* BOUTON DE TEST EXTRACTION AUTOMATIQUE */}
+      <div className="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+        <h4 className="text-lg font-medium text-yellow-800 mb-2">🧪 Test Extraction Automatique</h4>
+        <p className="text-sm text-yellow-700 mb-3">Bouton de test pour vérifier que le modal fonctionne</p>
+        <Button 
+          onClick={() => {
+            console.log('🧪 BOUTON TEST CLIQUÉ - État actuel:', showAutoExtraction);
+            setShowAutoExtraction(true);
+            console.log('🧪 setShowAutoExtraction(true) appelé');
+          }}
+          className="bg-yellow-600 hover:bg-yellow-700"
+        >
+          🧪 TEST: Ouvrir Modal Extraction
+        </Button>
+        <div className="mt-2 text-xs text-yellow-600">
+          État showAutoExtraction: {showAutoExtraction ? 'TRUE' : 'FALSE'}
+        </div>
+      </div>
+
       {/* Autres options d'enrichissement */}
       <div>
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Options d'enrichissement avancées</h3>
