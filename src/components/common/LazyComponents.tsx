@@ -1,9 +1,9 @@
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { LoadingSpinner } from './LoadingSpinner';
 
-// Wrapper pour lazy loading avec fallback
-function withSuspense<T extends object>(Component: React.LazyExoticComponent<React.ComponentType<T>>) {
-  return function WrappedComponent(props: T) {
+// Wrapper pour lazy loading avec fallback - version simplifiée
+function withSuspense(Component: React.LazyExoticComponent<React.ComponentType<any>>) {
+  return function WrappedComponent(props: any) {
     return (
       <Suspense fallback={<LoadingSpinner />}>
         <Component {...props} />

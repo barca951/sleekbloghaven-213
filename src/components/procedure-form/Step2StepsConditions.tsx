@@ -17,7 +17,9 @@ export function Step2StepsConditions({
       const newStep: ProcedureStep = { 
         id: Date.now().toString(), 
         title: '', 
-        description: '' 
+        description: '',
+        order: procedureSteps.length + 1,
+        mandatory: false
       };
       setProcedureSteps([...procedureSteps, newStep]);
     }
