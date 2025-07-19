@@ -27,6 +27,17 @@ const Index = () => {
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState(section || "dashboard");
   const [language, setLanguage] = useState("fr");
+  const [error, setError] = useState<string | null>(null);
+
+  // Error boundary-like behavior for debugging
+  useEffect(() => {
+    try {
+      console.log('Index component mounted, section:', section, 'activeSection:', activeSection);
+    } catch (err) {
+      console.error('Error in Index component:', err);
+      setError(err instanceof Error ? err.message : 'Unknown error');
+    }
+  }, [section, activeSection]);
 
   // Sync activeSection with URL
   useEffect(() => {
@@ -110,6 +121,25 @@ const Index = () => {
     onSectionChange: handleSectionChange,
     language
   }), [activeSection, handleSectionChange, language]);
+
+  // Fallback error display
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center p-8">
+          <h1 className="text-2xl font-bold text-red-600 mb-4">Erreur de chargement</h1>
+          <p className="text-gray-700 mb-4">Une erreur s'est produite lors du chargement de la page:</p>
+          <p className="text-sm text-gray-600 bg-gray-100 p-3 rounded">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Recharger la page
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <SecurityProvider>
