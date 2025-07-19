@@ -52,6 +52,7 @@ export function AutomaticExtractionModal({
   context,
   onDataExtracted 
 }: AutomaticExtractionModalProps) {
+  console.log('🎭 [AutomaticExtractionModal] PROPS REÇUES - isOpen:', isOpen, 'context:', context);
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [extractionMethod, setExtractionMethod] = useState<'file' | 'url' | 'text'>('file');
