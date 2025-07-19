@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Plus, Upload, Wand2, Database, Scan, Settings } from 'lucide-react';
+import { Plus, Upload, Wand2, Database, Scan, Settings, Zap } from 'lucide-react';
 import { SmartOCRProcessor } from '@/components/common/SmartOCRProcessor';
 import { useAIAutoFill } from '@/hooks/useAIAutoFill';
 import { AIAutoFillModal } from '@/components/ai/AIAutoFillModal';
 import { ApiImportModal } from '@/components/modals/ApiImportModal';
 import { BatchImportModal } from '@/components/modals/BatchImportModal';
 import { useApiModalHandler } from '@/hooks/useApiModalHandler';
+import { AutomaticExtractionModal } from '@/components/common/AutomaticExtractionModal';
 
 interface EnrichmentTabProps {
   onAddProcedure: () => void;
@@ -17,6 +18,7 @@ interface EnrichmentTabProps {
 
 export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExtracted }: EnrichmentTabProps) {
   const [showOCRScanner, setShowOCRScanner] = useState(false);
+  const [showAutoExtraction, setShowAutoExtraction] = useState(false);
   const { isModalOpen, context, openModal, closeModal, handleDataGenerated } = useAIAutoFill();
   const { showApiModal, apiContext, openApiModal, closeApiModal } = useApiModalHandler();
 
@@ -87,14 +89,19 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
   };
 
   const handleAutoExtraction = () => {
-    const event = new CustomEvent('open-modal', {
-      detail: {
-        type: 'extraction',
-        title: 'Extraction automatique',
-        data: { feature: 'auto-extraction', context: 'procedures' }
-      }
-    });
-    window.dispatchEvent(event);
+    console.log('🎯 [EnrichmentTab] Ouverture du modal d\'extraction automatique');
+    setShowAutoExtraction(true);
+  };
+
+  const handleAutoExtractionDataExtracted = (data: any) => {
+    console.log('Données d\'extraction automatique pour procédure:', data);
+    // Ici vous pouvez traiter les données extraites et les passer au formulaire
+    if (onOCRDataExtracted) {
+      onOCRDataExtracted({
+        documentType: 'procedure',
+        formData: data
+      });
+    }
   };
 
   const handleApiImport = () => {
@@ -194,12 +201,12 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-md transition-shadow cursor-pointer border-gray-200" onClick={handleAutoExtraction}>
+          <Card className="hover:shadow-md transition-shadow cursor-pointer border-gray-200">
             <CardHeader className="text-center">
-              <Database className="w-12 h-12 mx-auto text-orange-600 mb-4" />
+              <Zap className="w-12 h-12 mx-auto text-orange-600 mb-4" />
               <CardTitle className="text-lg">Extraction automatique</CardTitle>
               <CardDescription>
-                Importer et traiter automatiquement des procédures
+                Extraire automatiquement le contenu de documents de procédures
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -208,7 +215,7 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
                 className="w-full border-orange-300 text-orange-700 hover:bg-orange-50" 
                 onClick={handleAutoExtraction}
               >
-                <Database className="w-4 h-4 mr-2" />
+                <Zap className="w-4 h-4 mr-2" />
                 Extraction auto
               </Button>
             </CardContent>
@@ -254,6 +261,14 @@ export function EnrichmentTab({ onAddProcedure, onOCRTextExtracted, onOCRDataExt
         onClose={() => setShowBatchImport(false)}
         context="procedures"
         onImportComplete={handleBatchImportComplete}
+      />
+
+      {/* Modal d'extraction automatique */}
+      <AutomaticExtractionModal
+        isOpen={showAutoExtraction}
+        onClose={() => setShowAutoExtraction(false)}
+        context="procedure"
+        onDataExtracted={handleAutoExtractionDataExtracted}
       />
     </div>
   );
