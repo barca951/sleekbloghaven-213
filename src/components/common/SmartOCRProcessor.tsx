@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Scan, CheckCircle, FileText, Settings } from 'lucide-react';
 import { OCRScanner } from './OCRScanner';
-import { extractLegalTextData, extractProcedureData } from '@/utils/ocrFormFiller';
+// Import dynamique pour éviter le problème de bundling
 import { useNomenclatureData } from '@/hooks/useNomenclatureData';
 
 interface SmartOCRProcessorProps {
@@ -23,7 +23,7 @@ export function SmartOCRProcessor({
   const [showScanner, setShowScanner] = useState(true);
   const { mapOCRDataToForm, getFormTemplateWithNomenclature } = useNomenclatureData();
 
-  const handleTextExtracted = (text: string) => {
+  const handleTextExtracted = async (text: string) => {
     console.log('🔍 [SmartOCRProcessor] Texte OCR extrait:', text.substring(0, 200) + '...');
     
     // Détecter le type de document avec patterns améliorés
@@ -36,14 +36,16 @@ export function SmartOCRProcessor({
                            lowerText.includes('circulaire') || lowerText.includes('convention') ||
                            lowerText.includes('constitution') || lowerText.includes('jurisprudence');
     
-    // Extraire les données avec les bonnes fonctions
+    // Extraire les données avec les bonnes fonctions (import dynamique)
     let parsedData: { documentType: 'legal' | 'procedure', formData: Record<string, any> };
     
     if (isLegalDocument) {
+      const { extractLegalTextData } = await import('@/utils/ocrFormFiller');
       const legalData = extractLegalTextData(text);
       const mappedLegalData = mapOCRDataToForm(legalData, 'legal');
       parsedData = { documentType: 'legal', formData: mappedLegalData };
     } else {
+      const { extractProcedureData } = await import('@/utils/ocrFormFiller');
       const procedureData = extractProcedureData(text);
       const mappedProcedureData = mapOCRDataToForm(procedureData, 'procedure');
       parsedData = { documentType: 'procedure', formData: mappedProcedureData };
