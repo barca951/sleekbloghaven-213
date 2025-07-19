@@ -25,8 +25,6 @@ export function AddProcedureForm({ isOpen, onClose }: AddProcedureFormProps) {
 
   // Filtrer les formulaires de la bibliothèque pour les procédures administratives
 
-  console.log('Nombre total de formulaires dans la bibliothèque:', customForms.length);
-  console.log('Tous les formulaires dans la bibliothèque:', customForms.map(f => ({ id: f.id, name: f.name, type: f.type, category: f.category })));
   
   const procedureForms = customForms.filter(form => {
     const match = form.type === 'procedures_administratives' || form.category === 'Procédures Administratives';

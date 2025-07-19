@@ -60,11 +60,6 @@ export function ProcedureForm({ onClose, onSubmit, ocrData, initialInputMethod =
     }
     return acc;
   }, []);
-
-
-  console.log('Nombre total de formulaires dans la bibliothèque:', customForms.length);
-  console.log('Formulaires de procédures filtrés:', procedureForms.length);
-  console.log('Formulaires de procédures uniques:', uniqueProcedureForms.length);
   console.log('Types trouvés:', customForms.map(f => f.type).filter((v, i, a) => a.indexOf(v) === i));
   console.log('Catégories trouvées:', customForms.map(f => f.category).filter((v, i, a) => a.indexOf(v) === i));
 

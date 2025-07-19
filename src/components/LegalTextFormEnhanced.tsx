@@ -79,11 +79,6 @@ export function LegalTextFormEnhanced({
     }
     return acc;
   }, []);
-
-
-  console.log('Nombre total de formulaires dans la bibliothèque:', customForms.length);
-  console.log('Formulaires juridiques filtrés:', legalTextForms.length);
-  console.log('Formulaires juridiques uniques:', uniqueLegalTextForms.length);
   console.log('Types trouvés:', customForms.map(f => f.type).filter((v, i, a) => a.indexOf(v) === i));
   console.log('Catégories trouvées:', customForms.map(f => f.category).filter((v, i, a) => a.indexOf(v) === i));
 
