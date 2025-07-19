@@ -1,10 +1,75 @@
 import { UseFormReturn } from 'react-hook-form';
 
+export interface ProcedureFormData {
+  // Informations générales
+  title: string;
+  description: string;
+  type: string;
+  category: string;
+  priority: string;
+  status: string;
+  
+  // Métadonnées
+  reference: string;
+  version: string;
+  effectiveDate: string;
+  expirationDate: string;
+  
+  // Organisation
+  organization: string;
+  department: string;
+  responsible: string;
+  
+  // Documents et fichiers
+  documents: File[];
+  attachments: File[];
+  
+  // Étapes et processus
+  steps: ProcedureStep[];
+  requirements: string[];
+  
+  // Tags et classification
+  tags: string[];
+  keywords: string[];
+  
+  // Informations de contact
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  
+  // Champs dynamiques
+  customFields: Record<string, any>;
+}
+
 export interface ProcedureStep {
   id: string;
   title: string;
   description: string;
-  conditions?: string;
+  order: number;
+  duration?: string;
+  responsible?: string;
+  documents?: string[];
+  mandatory: boolean;
+}
+
+export interface ValidationError {
+  field: string;
+  message: string;
+}
+
+export interface ProcedureFormProps {
+  onClose: () => void;
+  onSubmit: (data: ProcedureFormData) => void;
+  ocrData?: any;
+  initialInputMethod?: 'manual' | 'ocr';
+  initialData?: Partial<ProcedureFormData>;
+}
+
+export interface OCRProcessingState {
+  isProcessing: boolean;
+  progress: number;
+  currentStep: string;
+  error?: string;
 }
 
 export interface FormStepProps {
