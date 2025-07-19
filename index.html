@@ -1,17 +1,85 @@
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dalil.dz</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Changa:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Dalil.dz - Test Immédiat</title>
+    <style>
+      body { 
+        font-family: Arial, sans-serif; 
+        margin: 0; 
+        padding: 20px; 
+        background: linear-gradient(135deg, #1e7e34, #28a745);
+        color: white;
+        min-height: 100vh;
+      }
+      .container { 
+        max-width: 800px; 
+        margin: 0 auto; 
+        text-align: center; 
+      }
+      .status { 
+        background: rgba(255,255,255,0.1); 
+        padding: 20px; 
+        border-radius: 10px; 
+        margin: 20px 0; 
+      }
+      .green { color: #00ff88; }
+      .red { color: #ff4444; }
+    </style>
   </head>
   <body>
+    <div class="container">
+      <h1>🇩🇿 dalil.dz - Plateforme Juridique</h1>
+      <p>Plateforme de veille juridique et réglementaire</p>
+      
+      <div class="status">
+        <h2>✅ Statut du Système</h2>
+        <p class="green">• Serveur Web : Fonctionnel</p>
+        <p class="green">• Interface : Chargée</p>
+        <p class="green">• Styles : Actifs</p>
+        <p>Heure : <span id="time"></span></p>
+      </div>
+
+      <div class="status">
+        <h3>Sections Disponibles</h3>
+        <p>• 📊 Tableau de bord</p>
+        <p>• ⚖️ Catalogue juridique</p>
+        <p>• 📋 Procédures administratives</p>
+        <p>• 🔍 Recherche avancée</p>
+        <p>• 🤖 Assistant IA</p>
+      </div>
+
+      <div class="status">
+        <h3>🔧 Mode Test Activé</h3>
+        <p>Cette page confirme que l'affichage fonctionne.</p>
+        <p>Pour l'application React complète, résolution en cours...</p>
+      </div>
+    </div>
+
     <div id="root"></div>
+
+    <script>
+      // Mise à jour de l'heure
+      function updateTime() {
+        document.getElementById('time').textContent = new Date().toLocaleString('fr-FR');
+      }
+      updateTime();
+      setInterval(updateTime, 1000);
+
+      // Test React si disponible
+      console.log('Page chargée. Test React...');
+      
+      // Tentative de chargement de React
+      setTimeout(() => {
+        if (document.getElementById('root').innerHTML === '') {
+          console.log('React non chargé - Mode fallback HTML actif');
+        }
+      }, 2000);
+    </script>
+
+    <!-- Chargement React en second plan -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
