@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { performanceMonitor } from '@/utils/performanceMonitor';
 import { advancedCache } from '@/utils/advancedCaching';
 import { automatedTestRunner, useTestRunner } from '@/utils/testing';
-import { securityMonitor } from '@/utils/enhancedSecurity';
+import { lightSecurityMonitor as securityMonitor } from '@/utils/optimizedSecurity';
 import { 
   Activity, 
   Zap, 

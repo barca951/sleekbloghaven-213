@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { securityMonitor } from '@/utils/enhancedSecurity';
+import { lightSecurityMonitor as securityMonitor } from '@/utils/optimizedSecurity';
 import { AlertTriangle } from 'lucide-react';
 
 interface SecureInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -4,10 +4,15 @@
 
 import { lightSecurityMonitor } from './optimizedSecurity';
 
-// Fichiers potentiellement obsolètes identifiés
-const obsoleteFiles = [
+// Fichiers nettoyés (supprimés avec succès)
+const cleanedFiles = [
+  'src/utils/enhancedSecurity.ts', // ✅ Supprimé - remplacé par optimizedSecurity
+  'src/components/ai/future-features/PredictiveAnalysisTab.tsx', // ✅ Supprimé - non implémenté
+];
+
+// Fichiers inexistants (déjà supprimés précédemment)
+const alreadyCleanedFiles = [
   'src/utils/enhancedValidation.ts',
-  'src/utils/enhancedSecurity.ts', 
   'src/utils/securityUtils.ts',
   'src/utils/securityEnhanced.ts',
   'src/components/modals/UnifiedModalManager.tsx',
@@ -38,8 +43,12 @@ export class CleanupManager {
     console.log(`🧹 CLEANUP: ${logEntry}`);
   }
 
-  getObsoleteFiles(): string[] {
-    return obsoleteFiles;
+  getCleanedFiles(): string[] {
+    return cleanedFiles;
+  }
+
+  getAlreadyCleanedFiles(): string[] {
+    return alreadyCleanedFiles;
   }
 
   getLargeFiles(): typeof largeFilesToRefactor {
@@ -48,10 +57,12 @@ export class CleanupManager {
 
   getCleanupSummary() {
     return {
-      obsoleteFilesCount: obsoleteFiles.length,
+      cleanedFilesCount: cleanedFiles.length,
+      alreadyCleanedCount: alreadyCleanedFiles.length,
       largeFilesCount: largeFilesToRefactor.length,
       cleanupActions: this.cleanupLog.length,
-      lastCleanup: this.cleanupLog[this.cleanupLog.length - 1] || 'Aucun nettoyage effectué'
+      lastCleanup: this.cleanupLog[this.cleanupLog.length - 1] || 'Aucun nettoyage effectué',
+      totalFilesProcessed: cleanedFiles.length + alreadyCleanedFiles.length
     };
   }
 

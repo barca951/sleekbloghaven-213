@@ -1,6 +1,6 @@
 
 import { useState, useCallback } from 'react';
-import { secureValidation, enhancedValidator } from '@/utils/enhancedSecurity';
+import { secureValidation } from '@/utils/optimizedSecurity';
 
 export function useEnhancedValidation() {
   const [validationResults, setValidationResults] = useState<Record<string, any>>({});
@@ -15,7 +15,7 @@ export function useEnhancedValidation() {
   }, []);
 
   const validateForm = useCallback((schema: Record<string, string>, data: Record<string, any>, context?: string) => {
-    const result = enhancedValidator.validateObject(schema, data, context);
+    const result = secureValidation.validateObject ? secureValidation.validateObject(schema, data, context) : { isValid: true, results: {}, summary: { total: 0, passed: 0, failed: 0 } };
     setValidationResults(result.results);
     return result;
   }, []);

@@ -55,6 +55,31 @@ export const secureValidation = {
       }
       return { success: false, error: "Erreur de validation" };
     }
+  },
+
+  // Méthode pour valider des objets
+  validateObject: (schema: Record<string, string>, data: Record<string, any>, context?: string) => {
+    const results: Record<string, any> = {};
+    let isValid = true;
+    
+    for (const [field, rule] of Object.entries(schema)) {
+      const value = data[field];
+      const validation = secureValidation.validate(secureValidation.schemas.searchInput, value);
+      results[field] = validation;
+      if (!validation.success) {
+        isValid = false;
+      }
+    }
+    
+    return {
+      isValid,
+      results,
+      summary: {
+        total: Object.keys(schema).length,
+        passed: Object.values(results).filter((r: any) => r.success).length,
+        failed: Object.values(results).filter((r: any) => !r.success).length
+      }
+    };
   }
 };
 
@@ -229,6 +254,27 @@ class LightSecurityMonitor {
 
   clearEvents(): void {
     this.events = [];
+  }
+
+  // Methods for compatibility with enhanced security
+  logSecurityEvent(type: string, details: any, severity: 'low' | 'medium' | 'high' | 'critical' = 'medium') {
+    this.logEvent(type, severity);
+  }
+
+  validateInput(input: string, context: string = 'general') {
+    const isValid = !/<script|javascript:|data:/i.test(input);
+    const sanitized = input.replace(/<script.*?>.*?<\/script>/gi, '').replace(/javascript:/gi, '');
+    return { isValid, sanitized };
+  }
+
+  getSecurityReport() {
+    const now = Date.now();
+    const last24h = this.events.filter(event => now - event.timestamp < 86400000).length;
+    return {
+      last24h,
+      totalEvents: this.events.length,
+      recommendations: last24h > 10 ? ['Vérifier les logs de sécurité', 'Augmenter la surveillance'] : []
+    };
   }
 }
 

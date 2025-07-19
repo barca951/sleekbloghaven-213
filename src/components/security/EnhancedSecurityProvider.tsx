@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { securityMonitor } from '@/utils/enhancedSecurity';
+import { lightSecurityMonitor as securityMonitor } from '@/utils/optimizedSecurity';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Shield, AlertTriangle, CheckCircle } from 'lucide-react';
 

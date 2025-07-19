@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { LoginForm } from '@/components/auth/LoginForm';
 import { Loader2 } from 'lucide-react';
-import { securityMonitor } from '@/utils/enhancedSecurity';
+import { lightSecurityMonitor as securityMonitor } from '@/utils/optimizedSecurity';
 
 interface SecureWrapperProps {
   children: React.ReactNode;

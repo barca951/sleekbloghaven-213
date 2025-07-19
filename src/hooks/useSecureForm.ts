@@ -1,6 +1,6 @@
 
 import { useState, useCallback } from 'react';
-import { enhancedValidation, secureSanitizer } from '@/utils/enhancedSecurity';
+import { secureValidation, secureSanitizer } from '@/utils/optimizedSecurity';
 
 interface ValidationRule {
   type: 'email' | 'phone' | 'password' | 'custom';
@@ -41,11 +41,14 @@ export function useSecureForm<T extends Record<string, any>>(
 
     switch (rule.type) {
       case 'email':
-        return enhancedValidation.email(value) ? undefined : rule.message;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(value) ? undefined : rule.message;
       case 'phone':
-        return enhancedValidation.phone(value) ? undefined : rule.message;
+        const phoneRegex = /^(\+213|0)[5-7][0-9]{8}$/;
+        return phoneRegex.test(value.replace(/\s/g, '')) ? undefined : rule.message;
       case 'password':
-        const passwordResult = enhancedValidation.strongPassword(value);
+        const isStrong = value.length >= 8 && /[a-z]/.test(value) && /[A-Z]/.test(value) && /[0-9]/.test(value);
+        const passwordResult = { valid: isStrong, feedback: isStrong ? [] : ['Mot de passe trop faible'] };
         return passwordResult.valid ? undefined : passwordResult.feedback.join(', ');
       case 'custom':
         return rule.validator?.(value) ? undefined : rule.message;
