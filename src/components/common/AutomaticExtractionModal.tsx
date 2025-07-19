@@ -20,8 +20,7 @@ import {
   CheckCircle,
   Loader2,
   FileImage,
-  Link,
-  X
+  Link
 } from 'lucide-react';
 
 interface ExtractedData {
@@ -199,14 +198,9 @@ export function AutomaticExtractionModal({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="flex items-center justify-between">
-            <span className="flex items-center gap-2">
-              <Zap className="w-5 h-5 text-yellow-600" />
-              {labels.title}
-            </span>
-            <Button variant="ghost" size="sm" onClick={handleClose}>
-              <X className="w-4 h-4" />
-            </Button>
+          <DialogTitle className="flex items-center gap-2">
+            <Zap className="w-5 h-5 text-yellow-600" />
+            {labels.title}
           </DialogTitle>
         </DialogHeader>
 

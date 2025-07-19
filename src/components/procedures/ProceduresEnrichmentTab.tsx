@@ -74,7 +74,10 @@ export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, on
   };
 
   const handleAutoExtraction = () => {
+    console.log('🎯 [ProceduresEnrichmentTab] handleAutoExtraction appelé');
+    console.log('🎯 [ProceduresEnrichmentTab] État actuel showAutoExtraction:', showAutoExtraction);
     setShowAutoExtraction(true);
+    console.log('🎯 [ProceduresEnrichmentTab] Nouveau état showAutoExtraction:', true);
   };
 
   const handleAutoExtractionDataExtracted = (data: any) => {
@@ -181,7 +184,7 @@ export function ProceduresEnrichmentTab({ onAddProcedure, onOCRTextExtracted, on
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-md transition-shadow cursor-pointer border-gray-200" onClick={handleAutoExtraction}>
+          <Card className="hover:shadow-md transition-shadow cursor-pointer border-gray-200">
             <CardHeader className="text-center">
               <Zap className="w-12 h-12 mx-auto text-orange-600 mb-4" />
               <CardTitle className="text-lg">Extraction automatique</CardTitle>
