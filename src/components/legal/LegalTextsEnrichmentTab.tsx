@@ -154,6 +154,14 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
       onClick: handleAutoFill
     },
     {
+      icon: Database,
+      title: "Extraction automatique",
+      description: "Importer et traiter automatiquement des textes juridiques",
+      buttonText: "Extraction auto",
+      color: "orange",
+      onClick: handleAutoExtraction
+    },
+    {
       icon: Settings,
       title: "Import API",
       description: "Importer le contenu depuis des sources API configurées",
@@ -215,7 +223,7 @@ export function LegalTextsEnrichmentTab({ onAddLegalText, onOCRTextExtracted, on
       {/* Autres options d'enrichissement */}
       <div>
         <h3 className="text-xl font-semibold text-gray-900 mb-6">Options d'enrichissement avancées</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           {actionsConfig.slice(2).map((action, index) => (
             <Card key={index + 2} className="hover:shadow-md transition-shadow cursor-pointer border-gray-200" onClick={action.onClick}>
               <CardHeader className="text-center">
