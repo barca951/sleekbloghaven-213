@@ -61,7 +61,7 @@ export function ProcedureForm({ onClose, onSubmit, ocrData, initialInputMethod =
     return acc;
   }, []);
 
-  console.log('=== DEBUG ProcedureForm ===');
+
   console.log('Nombre total de formulaires dans la bibliothèque:', customForms.length);
   console.log('Formulaires de procédures filtrés:', procedureForms.length);
   console.log('Formulaires de procédures uniques:', uniqueProcedureForms.length);

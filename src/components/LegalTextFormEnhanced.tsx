@@ -80,7 +80,7 @@ export function LegalTextFormEnhanced({
     return acc;
   }, []);
 
-  console.log('=== DEBUG LegalTextFormEnhanced ===');
+
   console.log('Nombre total de formulaires dans la bibliothèque:', customForms.length);
   console.log('Formulaires juridiques filtrés:', legalTextForms.length);
   console.log('Formulaires juridiques uniques:', uniqueLegalTextForms.length);
